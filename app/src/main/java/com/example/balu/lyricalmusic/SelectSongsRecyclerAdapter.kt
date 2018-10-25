@@ -4,6 +4,7 @@ import android.content.Context
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.RecyclerView
 import android.util.Log
+import android.util.SparseBooleanArray
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +14,7 @@ import com.example.balu.lyricalmusic.viewmvp.SelectSongsObject
 class SelectSongsRecyclerAdapter(val selectSongsList:ArrayList<SelectSongsObject>
                                  ,val context:Context) :RecyclerView.Adapter<ViewHolder>()
 {
+
 
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): ViewHolder
     {
@@ -25,10 +27,16 @@ class SelectSongsRecyclerAdapter(val selectSongsList:ArrayList<SelectSongsObject
         p0.tvalbum.setText(selectSongsList.get(p1).songAlbum)
         p0.tvduration.setText(selectSongsList.get(p1).songDuration.toString())
         p0.tvArtist.setText(selectSongsList.get(p1).songArtist)
+        p0.checkBox.isChecked=selectSongsList.get(p1).isSelected()
 
+        p0.checkBox.setOnClickListener(View.OnClickListener {
+            selectSongsList.get(p1).setSelected(p0.checkBox.isChecked)
+        })
 
 
     }
+
+
 
     override fun getItemCount(): Int {
         Log.d("getItemCount",selectSongsList.size.toString())
@@ -38,10 +46,37 @@ class SelectSongsRecyclerAdapter(val selectSongsList:ArrayList<SelectSongsObject
 
     class ViewHolder(view :View) : RecyclerView.ViewHolder( view)
     {
+
         val tvtitle=view.song_title
         val tvalbum=view.song_album
         val tvduration=view.song_duration
         val tvArtist=view.tvartist
+        var itemStateArray=SparseBooleanArray()
+
+        val checkBox=view.select_song_checkbox
+
+
+
+
+
+
+
+        /*fun bind(pos:Int,isChecked:Boolean)
+        {
+            if(isChecked==false)
+            {
+                checkBox.isChecked=false
+            }
+            else
+            {
+                checkBox.isChecked=true
+            }
+
+        }*/
+
+
+
+
 
 
 
