@@ -1,9 +1,10 @@
 package com.example.balu.lyricalmusic.viewmvp
 
 import android.database.Cursor
+import java.io.Serializable
 import java.math.RoundingMode
 
-class SelectSongsObject()
+class SelectSongsObject():Serializable
 {
     lateinit var songTitle:String
     lateinit var songArtist:String

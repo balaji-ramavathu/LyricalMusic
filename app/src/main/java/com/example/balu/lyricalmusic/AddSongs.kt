@@ -2,19 +2,23 @@ package com.example.balu.lyricalmusic
 
 
 import android.annotation.TargetApi
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
+import android.support.design.widget.FloatingActionButton
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import com.example.balu.lyricalmusic.model.GetSongsData
 import com.example.balu.lyricalmusic.viewmvp.SelectSongsObject
+import java.io.Serializable
 import java.time.Duration
 import java.util.jar.Manifest
 
@@ -22,6 +26,7 @@ class AddSongs : AppCompatActivity()
 {
     var songsTitles=ArrayList<String>()
     var selectSongsList=ArrayList<SelectSongsObject>()
+    var selectedSongsList=ArrayList<SelectSongsObject>()
 
 
 
@@ -44,15 +49,32 @@ class AddSongs : AppCompatActivity()
             Log.d("permission","denges")
         }
 
-
-
-
-
         var recyclerView=findViewById<RecyclerView>(R.id.rv_add_songs)
         var recyclerAdapter=SelectSongsRecyclerAdapter(selectSongsList,this)
         var layoutManager=LinearLayoutManager(this)
-        recyclerView.layoutManager= layoutManager as RecyclerView.LayoutManager?
+        recyclerView.layoutManager= layoutManager
         recyclerView.adapter=recyclerAdapter
+
+        val yesfab=findViewById<FloatingActionButton>(R.id.yesfab)
+        yesfab.setOnClickListener(View.OnClickListener
+        {
+
+            for(i in 0..selectSongsList.size-1)
+            {
+                if(selectSongsList.get(i).isSelected())
+                {
+                    selectedSongsList.add(selectSongsList.get(i))
+                    Log.d("selected $i",selectSongsList.get(i).songTitle)
+                }
+            }
+            var intent= Intent()
+            intent.putExtra("SONGS",selectedSongsList)
+            setResult(2,intent)
+            finish()
+
+
+
+        })
 
 
 
